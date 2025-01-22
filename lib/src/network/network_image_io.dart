@@ -280,6 +280,11 @@ class ExtendedNetworkImageProvider
   }
 
   Future<HttpClientResponse> _getResponse(Uri resolved) async {
+
+    if(headers != null && headers!.containsKey(HttpHeaders.userAgentHeader)) {
+      httpClient.userAgent = null;
+    }
+
     final HttpClientRequest request = await httpClient.getUrl(resolved);
     headers?.forEach((String name, String value) {
       request.headers.add(name, value);
