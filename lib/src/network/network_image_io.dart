@@ -285,6 +285,19 @@ class ExtendedNetworkImageProvider
       httpClient.userAgent = null;
     }
 
+    print('headers == $headers');
+
+    // 可选：禁用证书验证（仅用于开发环境）
+    httpClient.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final String? proxy = headers?['proxy'];
+    headers?.remove('proxy');
+    httpClient.findProxy = (Uri uri){
+      if(proxy != null) {
+        return 'PROXY $proxy';
+      }
+      return 'DIRECT';
+    };
     final HttpClientRequest request = await httpClient.getUrl(resolved);
     headers?.forEach((String name, String value) {
       request.headers.add(name, value);
