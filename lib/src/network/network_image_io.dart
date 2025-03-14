@@ -285,8 +285,6 @@ class ExtendedNetworkImageProvider
       httpClient.userAgent = null;
     }
 
-    print('headers == $headers');
-
     // 可选：禁用证书验证（仅用于开发环境）
     httpClient.badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
